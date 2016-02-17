@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Acronym Generator</title>
+		<link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+	</head>
+	<body>
+		<div class="container">
+			<h1>Acronym Generator</h1>
+			<form action="" method="post">
+				<input type="text" placeholder="Proposal keywords here" name="words" value="{{ request.form.words }}">
+				{% if request.form.clip is defined %}
+				<input type="number" placeholder="3" min="1" max="10" name="clip" value="{{ request.form.clip }}">
+				{% else %}
+				<input type="number" placeholder="3" min="1" max="10" name="clip" value="3">
+				{% endif %}
+				<input class="btn btn-default" type="submit" value="Generate">
+			</form>
+			{% if error %}
+				<p class="error"><strong>Error:</strong> {{ error }}</p>
+			{% endif %}
+			{% for message in get_flashed_messages() %}
+				{{ message }}
+			{% endfor %}
+		</div>
+	</body>
+</html>

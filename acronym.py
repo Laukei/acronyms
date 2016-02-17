@@ -1,14 +1,7 @@
-words = ['Quantum','Advanced','Nanowire','Detector','Photon','Superconductivity','Non-equilibrium','Nanoscale']
-clip = 5 #match at most first n letters of word in words
-dictionary_file = 'dictionary.txt'
+#words = ['Quantum','Advanced','Nanowire','Detector','Photon','Superconductivity','Non-equilibrium','Nanoscale']
+#clip = 5 #match at most first n letters of word in words
 
-#load dictionary data
-with open(dictionary_file,'r') as f:
-	dictionary = f.readlines()
-dictionary = [i.strip('\n') for i in dictionary]
-
-
-def genAcronym(words,clip):
+def genAcronym(words,clip,dictionary):
 	#create list of possible fragments
 	wildcards = list(str(words)).count('?')
 	word_fragments = {i:[word.lower()[:clip][:i] for word in words] for i in range(1,clip+1)}
@@ -44,5 +37,5 @@ def genAcronym(words,clip):
 				break
 	return successes
 		
-for row in genAcronym(words,clip):
-	print row
+#for row in genAcronym(words,clip):
+#	print row
