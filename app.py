@@ -36,7 +36,7 @@ def home():
 				f = _pool.apply_async(worker,[request.form['words'],request.form['clip']])
 				r = f.get(timeout=10)
 				for row in r:
-					flash(row[2])
+					flash(row,'result')
 				redirect(url_for('home'))
 		except ValueError:
 			error = 'Clip value not set'
