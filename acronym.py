@@ -29,13 +29,14 @@ def genAcronym(words,clip,dictionary):
 					if index != i:
 						if index == None:
 							result += '?'
+							result_words.append(['?',1])
 						else:
 							result += words[index][:mask.count(index)]
-							result_words.append(words[index])
+							result_words.append([words[index],mask.count(index)])
 							i = index
-				successes.append([word,result_words,result])
+				successes.append([word,result_words,result,len(word)])
 				break
-	return successes
+	return sorted(successes, key=lambda s: len(s[0]))[::-1]
 		
 #for row in genAcronym(words,clip):
 #	print row

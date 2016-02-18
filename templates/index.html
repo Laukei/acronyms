@@ -3,19 +3,26 @@
 	<head>
 		<title>Acronym Generator</title>
 		<link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
 		<div class="container">
-			<h1>Acronym Generator</h1>
-			<form action="" method="post">
-				<input type="text" placeholder="Proposal keywords here" name="words" value="{{ request.form.words }}">
-				{% if request.form.clip is defined %}
-				<input type="number" placeholder="3" min="1" max="10" name="clip" value="{{ request.form.clip }}">
-				{% else %}
-				<input type="number" placeholder="3" min="1" max="10" name="clip" value="3">
-				{% endif %}
-				<input class="btn btn-default" type="submit" value="Generate">
-			</form>
+			<h1 class="text-center">Grant Proposal Acronym Generator</h1>
+			<div class="row center-block">
+				<form action="" method="post">
+					<div class="col-sm-8">
+						<input class="form-control input-lg" type="text" placeholder="Proposal keywords here, ? wildcard" name="words" value="{{ request.form.words }}">
+					</div>
+					<div class="row center-block">
+						<div class="col-sm-2 col-xs-2">
+							<input class="form-control input-lg" type="number" placeholder="3" min="1" max="10" name="clip" value="{% if request.form.clip is defined %}{{ request.form.clip }}{% else %}3{% endif %}">
+						</div>
+						<div class="col-sm-1 col-xs-1">
+							<input class="btn btn-primary btn-lg" type="submit" value="Generate">
+						</div>
+					</div>
+				</form>
+			</div>
 			{% if error %}
 				<p class="error"><strong>Error:</strong> {{ error }}</p>
 			{% endif %}
@@ -26,17 +33,25 @@
 					{% endfor %}
 				{% endif %}
 			{% endwith %}
-
-
-			{% with messages = get_flashed_messages(category_filter=["result"]) %}
-				{% if messages %}
-					<ul>
-					{% for message in messages %}
-						<li>{{ message }}</li>
-					{% endfor %}
-					</ul>
-				{% endif %}
-			{% endwith %}
+			<br>
+			<div class="container lead">
+				{% with messages = get_flashed_messages(category_filter=["result"]) %}
+					{% if messages %}
+						<dl class="dl-horizontal">
+						{% for message in messages %}
+							<dt class="text-center">{{ message[2] }}</dt><dd>
+							{% for part in message[1] %}
+								<span class="lead"><strong>{{ part[0] }}</strong><span class="text-muted">{{ part[1] }}</span>
+							{% endfor %}
+							</dd>
+						{% endfor %}
+						</dl>
+					{% endif %}
+				{% endwith %}
+			</div>
+			<div class="text-center">
+				<p class="text-muted">Took {{ processtime }} seconds to process request</p>
+			</div>
 		</div>
 	</body>
 </html>
